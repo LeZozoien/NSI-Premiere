@@ -1,3 +1,7 @@
 # Ignorer les vidéos
 *.mp4
 *.mkv
+*.mov
+
+# Ignorer les zip
+*.zip
