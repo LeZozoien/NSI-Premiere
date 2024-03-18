@@ -21,7 +21,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    if color ==0:
+    if color == 0:
         color = 255
     else:
         color = 0
