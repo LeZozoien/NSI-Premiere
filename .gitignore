@@ -5,3 +5,6 @@
 
 # Ignorer les zip
 *.zip
+
+# Ignorer le .vscode
+.vscode/
