@@ -1,4 +1,6 @@
 def get_pairs(sandwiches:list[tuple[str, float|int]], boissons:list[tuple[str, float|int]]):
+    """Returns minimized calories pairs from two lists of tuples containing name/calories pairs"""
+
 
     # On vérifie que l'argument sandwiches est du bon type
 
@@ -37,10 +39,14 @@ def get_pairs(sandwiches:list[tuple[str, float|int]], boissons:list[tuple[str, f
     if len(sandwiches) != len(boissons):
         raise ValueError("Both arguments must have the same length")
 
+    # On trie les listes; une dans l'ordre croissant, l'autre dans l'ordre décroissant
+
     sand_sorted = sorted(sandwiches, key=lambda calories: calories[1])
     boissons_sorted = sorted(boissons, key=lambda calories: calories[1], reverse=True)
 
     pairs = []
+
+    # Pour chaque élément d'une liste, on lui associe l'élément inverse de l'autre (et aussi la valeur des calories totales)
 
     for index, sandwich in enumerate(sand_sorted):
         pairs.append((sandwich[0], boissons_sorted[index][0], str(sandwich[1] + boissons_sorted[index][1])))
