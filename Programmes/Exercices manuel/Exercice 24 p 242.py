@@ -32,7 +32,7 @@ def get_pairs(sandwiches:list[tuple[str, float|int]], boissons:list[tuple[str, f
                 if not isinstance(boisson[1], (int, float)):
                     raise TypeError("calories of boisson must be an int or a float")
                 if len(boisson) != 2 :
-                    raise ValueError("Boissons airs must only contain 2 values")
+                    raise ValueError("Boissons pairs must only contain 2 values")
                 
     # On vérifie que les 2 listes ont la même longueur
                 
