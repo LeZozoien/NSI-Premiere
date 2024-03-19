@@ -8,3 +8,8 @@
 
 # Ignorer le .vscode
 .vscode/
+
+# Ignorer les fichier obsidian
+Exos projet euler.md
+NSI.md
+
