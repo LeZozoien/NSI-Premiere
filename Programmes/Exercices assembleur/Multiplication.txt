@@ -1,0 +1,36 @@
+MOV R12, #0
+INP R0, 2
+INP R1, 2
+
+// Check if result is zero
+CMP R0, #0
+BEQ zero
+CMP R1, #0
+BEQ zero
+
+// Compare both inputs
+CMP R0, R1
+BLT loop_less
+B loop_more
+
+loop_less:
+SUB R0, R0, #1
+ADD R2, R2, R1
+CMP R0, #0
+BEQ fin
+B loop_less
+
+loop_more:
+SUB R1, R1, #1
+ADD R2, R2, R0
+CMP R1, #0
+BEQ fin
+B loop_more
+
+fin:
+OUT R2
+HALT
+
+zero :
+OUT R12
+HALT
