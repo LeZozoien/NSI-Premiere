@@ -26,3 +26,12 @@ BM : 1583
 PR : 941
 PM : 858
 MR : 1125
+
+Heuristique proposée : 
+
+Tester pour chaque point:
+    Commencer par ce point
+    Choisir le point le plus proche et le rendre "utilisé"
+    Répeter l'opération jusqu'a ce qu'il ne reste plus aucun point
+    Retourner au début
+Noter la distance du parours pour chaque point testé et prendre le plus petit
