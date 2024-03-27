@@ -78,11 +78,16 @@ def show_grid(grid):
         print(line)
 
 def is_full(grid)->bool:
+    last_grid = []
     for line in grid:
+        last_grid_line = []
         for value in line:
-            if value == 0:
-                return False
-    return True
+            last_grid_line.append(value)
+        last_grid.append(last_grid_line)
+    
+    if (move(0, last_grid) == cases) and (move(2, last_grid) == cases) and (move(1, last_grid) == cases) and (move(3, last_grid) == cases):
+        return True
+    return False
     
 def add_value(grid):
     found = False
