@@ -1,118 +1,114 @@
-import pygame
+import math
 
-class Cube:
+class Object:
+
     def __init__(self) -> None:
+        self.VERTICES = [(1, 1, 1),(1, 1, -1),
+                    (1, -1, 1),(1, -1, -1),
+                    (-1, 1, 1),(-1, 1, -1),
+                    (-1, -1, 1),(-1, -1, -1)]
         
-        self.VERTICES = [(1, 1, 1),(-1, 1, 1),
-                        (1, 1, -1),(-1, 1, -1),
-                        (1, 3, 1),(-1, 3, 1),
-                        (1, 3, -1),(-1, 3, -1)]
+        self.rotated_vertices = [(1, 1, 1),(1, 1, -1),
+                    (1, -1, 1),(1, -1, -1),
+                    (-1, 1, 1),(-1, 1, -1),
+                    (-1, -1, 1),(-1, -1, -1)]
 
         self.EDGES = [(0, 1), (0, 2), (0, 4),
-                    (1, 3), (1, 5), (2, 3),
-                    (2, 6), (3, 7), (4, 5),
-                    (4, 6), (5, 7), (6, 7)]
+                (1, 3), (1, 5), (2, 3),
+                (2, 6), (3, 7), (4, 5),
+                (4, 6), (5, 7), (6, 7)]
 
         self.FACES = [(0, 1, 2), (1, 3, 2),
-                    (4, 6, 5), (5, 6, 7),
-                    (0, 2, 4), (2, 6, 4),
-                    (5, 3, 1), (5, 7, 3),
-                    (7, 6, 2), (7, 2, 3),
-                    (1, 0, 5), (0, 4, 5),]
+                (2, 3, 6), (3, 7, 6),
+                (6, 7, 4), (7, 5, 4),
+                (4, 5, 0), (5, 1, 0),
+                (0, 2, 4), (7, 2, 3),]
+                # (1, 0, 5), (0, 4, 5),]
+        
+        self.rotation = [0, 0, 0]
+
+    def project_point(self, index, camera, focal):
+
+        # Variables : 
+        camx, camy, camz = camera
+        pointx, pointy, pointz = self.rotated_vertices[index]
+
+        # Camera to view:
+        pointx -= camx
+        pointx = -pointx
+        pointy -= camy
+        pointz -= camz
+
+        if pointx == 0:
+            return None
+
+        # Calculate projected coords
+        xproj = focal*pointy/pointx
+        yproj = focal*pointy/pointx
+
+        return xproj, yproj
     
-    def get_rotated(self, anglex, angley, anglez):
-        pass
+    def project_edge(self, index, camera, focal):
+        a, b = self.project_point(self.EDGES[index][0], camera, focal), self.project_point(self.EDGES[index][1], camera, focal)
+        if (a == None) or (b == None): return None
+        else: return a, b
 
+    def calculate_normal(self, index):
+        a, b, c = self.rotated_vertices[self.FACES[index][0]],self.rotated_vertices[self.FACES[index][1]],self.rotated_vertices[self.FACES[index][2]]
 
-pygame.init()
-BGCOLOR = (0, 0, 0)
-WINDOWSIZE = (1920, 1080)
-HALFSIZE = (WINDOWSIZE[0]//2, WINDOWSIZE[1]//2)
-screen = pygame.display.set_mode(WINDOWSIZE)
-screen.fill(BGCOLOR)
-pygame.display.set_caption('Window')
-pygame.display.flip()
+        u = (b[0]-a[0], b[1]-a[1], b[2]-a[2])
+        v = (c[0]-a[0], c[1]-a[1], c[2]-a[2])
 
-cube = Cube()
-scene_objects = [cube]
+        normx = u[1]*v[2] - u[2]*v[1]
+        normy = u[2]*v[0] - u[0]*v[2]
+        normz = u[0]*v[1] - u[1]*v[0]
 
-def project_point(point_x, point_y, point_z, focal)->tuple[float|int]:
+        return -normx, -normy, -normz
+    
+    def project_face(self, index, camera, focal):
+        normal = self.calculate_normal(index)
+        if normal[0]>0:
+            a = self.project_point(self.FACES[index][0], camera, focal)
+            b = self.project_point(self.FACES[index][1], camera, focal)
+            c = self.project_point(self.FACES[index][2], camera, focal)
+            if (a == None) or (b == None) or (c == None): return None
+            else:return a, b, c
+        else:return None
 
-    projected_x = point_x * focal / (point_y+focal)
-    projected_y = point_z * focal / (point_y+focal)
+    def rotation_point(self, index, angles):
+        x, y, z = self.VERTICES[index]
+        angle_x, angle_y, angle_z = angles
 
-    return projected_x, projected_y
+        # Conversion des angles en radians
+        angle_x = math.radians(angle_x)
+        angle_y = math.radians(angle_y)
+        angle_z = math.radians(angle_z)
 
-def project_edges(object_edges:tuple[int], object_vertices:tuple[float|int], focal:float)->list[list[tuple[float|int]]]:
-    projected_edges = []
-    for edge in object_edges:
-        point_a, point_b = object_vertices[edge[0]], object_vertices[edge[1]]
-        a_projected = project_point(point_a[0], point_a[1], point_a[2], focal)
-        b_projected = project_point(point_b[0], point_b[1], point_b[2], focal)
-        projected_edges.append((a_projected, b_projected))
-    return projected_edges
+        # Rotation autour de l'axe X
+        new_y_x = y * math.cos(angle_x) - z * math.sin(angle_x)
+        new_z_x = y * math.sin(angle_x) + z * math.cos(angle_x)
 
-def get_face_vectors(point_1, point_2, point_3):
-    vec1x = point_2[0] - point_1[0]
-    vec1y = point_2[1] - point_1[1]
-    vec1z = point_2[2] - point_1[2]
-    vec1 = [vec1x, vec1y, vec1z]
-    vec2x = point_3[0] - point_1[0]
-    vec2y = point_3[1] - point_1[1]
-    vec2z = point_3[2] - point_1[2]
-    vec2 = [vec2x, vec2y, vec2z]
+        # Rotation autour de l'axe Y
+        new_x_y = x * math.cos(angle_y) + z * math.sin(angle_y)
+        new_z_y = -x * math.sin(angle_y) + z * math.cos(angle_y)
 
-    return vec1, vec2
+        # Rotation autour de l'axe Z
+        new_x_z = x * math.cos(angle_z) - y * math.sin(angle_z)
+        new_y_z = x * math.sin(angle_z) + y * math.cos(angle_z)
 
-def calculate_normal(point_1, point_2, point_3):
+        return (new_x_z, new_y_x, new_z_y)
+    
+    def update_rotations(self):
+        for index in range(len(self.VERTICES)):
+            self.rotated_vertices[index] = self.rotation_point(index, self.rotation)
 
-    a, b = get_face_vectors(point_1, point_2, point_3)
-
-    normx = a[1]*b[2] - a[2]*b[1]
-    normy = a[2]*b[0] - a[0]*b[2]
-    normz = a[0]*b[1] - a[1]*b[0]
-    normal = [normx, normy, normz]
-    return normal
-
-
-
-running = True
-drawing = True
-zoom_factor = 100
+Camerapos = [4, 0, 0]
 focal = 1
 
-while running:
-    for event in pygame.event.get():  
-        if event.type == pygame.QUIT:
-            running = False
+cube = Object()
 
-    if drawing:
-
-        for object in scene_objects:
-
-            to_draw_edges = project_edges(object.EDGES, object.VERTICES, focal)
-
-            for face in object.FACES:
-                point_A, point_B, point_C = object.VERTICES[face[0]], object.VERTICES[face[1]], object.VERTICES[face[2]]
-                face_normal = calculate_normal(point_A, point_B, point_C)
-                if face_normal[1] < 0:
-                    projected_A, projected_B, projected_C = [project_point(point_A[0], point_A[1], point_A[2], focal),
-                                                            project_point(point_B[0], point_B[1], point_B[2], focal),
-                                                            project_point(point_C[0], point_C[1], point_C[2], focal)]
-                    projected_A, projected_B, projected_C = [(projected_A[0]*zoom_factor + HALFSIZE[0], projected_A[1]*zoom_factor + HALFSIZE[1]),
-                                                            (projected_B[0]*zoom_factor + HALFSIZE[0], projected_B[1]*zoom_factor + HALFSIZE[1]),
-                                                            (projected_C[0]*zoom_factor + HALFSIZE[0], projected_C[1]*zoom_factor + HALFSIZE[1])]
-                    print(projected_A, projected_B, projected_C)
-                    pygame.draw.polygon(screen, (0, 255, 255), [projected_A, projected_B, projected_C])
-
-
-            for edge in to_draw_edges:
-                ax, ay = edge[0][0], edge[0][1]
-                bx, by = edge[1][0], edge[1][1]
-                ax, ay, bx, by = ax*zoom_factor, ay*zoom_factor, bx*zoom_factor, by*zoom_factor
-                pygame.draw.line(screen, (255, 255, 255), (ax+HALFSIZE[0], ay+HALFSIZE[1]), (bx+HALFSIZE[0], by+HALFSIZE[1]))
-
-
-    drawing = False
-    
-    pygame.display.flip()
+for angle in range(0, 360, 30):
+    cube.rotation = [angle, 0, 0]
+    cube.update_rotations()
+    for face_index in range(len(cube.FACES)):
+        print(face_index, cube.project_face(face_index, Camerapos, focal))
