@@ -107,31 +107,43 @@ villes_pays = {
 # tuple (longitude, latitude). Afficher les noms de toutes les villes 
 # dont la latitude est inférieure à 23,43 degrés.
 
-for ville, coords in villes_coordonnees.items():
-    if coords[1] < 23.43 : print(ville)
+for ville, coords in villes_coordonnees.items(): # Pour chaque paire ville-coords de ville_coordonnées :
+    if coords[1] < 23.43 : print(ville)          # Si la latitude est inférieure à 23,43, on affiche le nom de la ville
 
 
 # b) On dispose également d’un dictionnaire villes_population 
 # qui associe à chaque nom de ville (chaîne) son nombre d’habitants (entier). 
 # Afficher les coordonnées de la ville ayant le plus d’habitants.
 
+# Initialisation des variables maximums
 max_hab = list(villes_population.values())[0]
 ville_max = list(villes_population.keys())[0]
-for ville, habitants in villes_population.items():
-    if habitants > max_hab: max_hab, ville_max = habitants, ville
-print(ville_max)
+
+for ville, habitants in villes_population.items():                  # Pour chaque paire ville-habitants de villes_population :
+    if habitants > max_hab: max_hab, ville_max = habitants, ville   # Si le nombre d'habitants de cette ville est supérieur au nombre max:
+                                                                    # on remplace le nombre maximum par le nombre d'habitants de cette ville
+                                                                    # et la ville_max par le nom de cette ville
+
+print(ville_max, villes_coordonnees[ville_max]) # On affiche le nom de la ville avec le plus d'habitants
 
 # c) On dispose enfin d’un dictionnaire villes_pays qui associe 
 # à chaque nom de pays (chaîne) un tableau de ses villes. Afficher 
 # le nombre total d’habitants des villes d’un pays donné et la latitude 
 # et la longitude moyenne de ces villes.
 
-for pays, villes in villes_pays.items():
+for pays, villes in villes_pays.items(): # Pour chaque paire pays-villes de villes_pays :
+
+    # Initialisation des totaux de chaque pays
     tot_hab = 0
     tot_pos = [0, 0]
-    for ville in villes:
-        tot_hab += villes_population[ville]
-        tot_pos = tot_pos[0]+villes_coordonnees[ville][0], tot_pos[1]+villes_coordonnees[ville][1]
+
+    for ville in villes: # Pour chaque paire pays-villes de villes_pays :
+        tot_hab += villes_population[ville] # On ajoute le nombre d'habitants de cette ville au total
+        tot_pos = tot_pos[0]+villes_coordonnees[ville][0], tot_pos[1]+villes_coordonnees[ville][1] # On ajoute les coordonnées au total
+    
+    # On divise les totaux par le nombre de villes dans ce pays
     tot_hab /= len(villes)
     tot_pos = tot_pos[0]/len(villes), tot_pos[1]/len(villes)
+
+    # On affiche le résultat
     print(pays, tot_hab, tot_pos)
