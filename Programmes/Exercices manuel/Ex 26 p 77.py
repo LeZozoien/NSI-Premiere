@@ -107,13 +107,31 @@ villes_pays = {
 # tuple (longitude, latitude). Afficher les noms de toutes les villes 
 # dont la latitude est inférieure à 23,43 degrés.
 
+for ville, coords in villes_coordonnees.items():
+    if coords[1] < 23.43 : print(ville)
+
 
 # b) On dispose également d’un dictionnaire villes_population 
 # qui associe à chaque nom de ville (chaîne) son nombre d’habitants (entier). 
 # Afficher les coordonnées de la ville ayant le plus d’habitants.
 
+max_hab = list(villes_population.values())[0]
+ville_max = list(villes_population.keys())[0]
+for ville, habitants in villes_population.items():
+    if habitants > max_hab: max_hab, ville_max = habitants, ville
+print(ville_max)
 
 # c) On dispose enfin d’un dictionnaire villes_pays qui associe 
 # à chaque nom de pays (chaîne) un tableau de ses villes. Afficher 
 # le nombre total d’habitants des villes d’un pays donné et la latitude 
 # et la longitude moyenne de ces villes.
+
+for pays, villes in villes_pays.items():
+    tot_hab = 0
+    tot_pos = [0, 0]
+    for ville in villes:
+        tot_hab += villes_population[ville]
+        tot_pos = tot_pos[0]+villes_coordonnees[ville][0], tot_pos[1]+villes_coordonnees[ville][1]
+    tot_hab /= len(villes)
+    tot_pos = tot_pos[0]/len(villes), tot_pos[1]/len(villes)
+    print(pays, tot_hab, tot_pos)
