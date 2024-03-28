@@ -28,6 +28,7 @@ def distance(a:tuple, b:tuple)->float|int: # a.
 
     return distance
 
+
 def get_size(points:tuple[tuple]): # b.
     xmin, ymin, xmax, ymax = 0
     for point in points:
@@ -41,6 +42,7 @@ def get_size(points:tuple[tuple]): # b.
     size_y = ymax-ymin
 
     return size_x, size_y
+
 
 def get_length(points:tuple[tuple]): # c.
     dist = 0
