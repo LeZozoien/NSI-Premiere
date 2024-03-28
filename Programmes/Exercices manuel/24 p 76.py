@@ -46,17 +46,9 @@ villes_capitales = {
     'vatican': 'Vatican',
 }
 
-def get_capitale(pays:str):
-    pays = pays.strip().lower()
-    if pays in villes_capitales: return villes_capitales[pays]
-    else: return None
+def get_inverse(dictionnaire:dict):
+    inv = {}
+    for pays in dictionnaire: inv[dictionnaire[pays]] = pays
+    return inv
 
-def get_pays(capitale:str):
-    for pays in villes_capitales:
-        if villes_capitales[pays] == capitale:
-            return pays
-    return None
-
-
-demande = input("Quelle ville ?")
-print(get_pays(demande))
+print(get_inverse(villes_capitales))
