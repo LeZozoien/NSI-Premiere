@@ -6,7 +6,7 @@
 # Compléter le fichier `exo-convolutions.py` pour :
 # 
 # !!a) Écrire une fonction `decale(m,dx,dy)` qui prend en entrée une matrice `m` d’entiers binaires 0-1 et renvoie une matrice de même dimension dans laquelle les `1` sont décalés de `dx` cases vers la droite et `dy` vers le bas.
-
+ 
 
 def decale(m,dx,dy):
     """ 
