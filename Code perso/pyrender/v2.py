@@ -104,6 +104,11 @@ class Object:
     def apply_rotation(self):
         self.rotated_vertices = self.rotate_vertices(self.VERTICES, self.rotation)
 
+def normalize_vector(vec):
+    x, y, z = vec
+    dist = (x**2+y**2+z**2)**0.5
+    return (x/dist, y/dist, z/dist)
+
 Camerapos = [4, 0, 0]
 focal = 1
 
@@ -148,7 +153,12 @@ while running:
         projected = cube.project_face(face_idx, Camerapos, focal)
         if projected != None:
             projected = [[projected[0][0]*100+halfSize[0], projected[0][1]*100+halfSize[1]], [projected[1][0]*100+halfSize[0], projected[1][1]*100+halfSize[1]], [projected[2][0]*100+halfSize[0], projected[2][1]*100+halfSize[1]]]
-            pygame.draw.polygon(screen, (255, 255, 255), projected, 1)
+            normal = cube.calculate_normal(face_idx)
+            normal = normalize_vector(normal)
+            normal = abs(normal[0]*255), abs(normal[1]*255), abs(normal[2]*255)
+            print(normal)
+            pygame.draw.polygon(screen, normal, projected, 0)
+            pygame.draw.polygon(screen, (0, 255, 255), projected, 1)
 
     pygame.display.flip()
     clk.tick(60)
