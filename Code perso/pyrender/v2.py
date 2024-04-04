@@ -2,7 +2,8 @@ import math
 
 class Object:
 
-    def __init__(self) -> None:
+    def __init__(self, position) -> None:
+        self.center = position
         self.VERTICES = [(1, 1, 1),(1, 1, -1),
                     (1, -1, 1),(1, -1, -1),
                     (-1, 1, 1),(-1, 1, -1),
@@ -76,7 +77,33 @@ class Object:
             else:return a, b, c
         else:return None
 
-    def rotate_vertices(self, vertices, rotation):
+    def rotate_vertices(self, vertices, camera_rotation):
+        camera_rotation = camera_rotation[0]*math.pi/180, camera_rotation[1]*math.pi/180, camera_rotation[2]*math.pi/180
+        rotated_vertices = []
+        for vertex in vertices:
+            x, y, z = vertex
+            rx, ry, rz = camera_rotation
+
+            # Rotation autour de l'axe x
+            x_new = x
+            y_new = y * math.cos(rx) - z * math.sin(rx)
+            z_new = y * math.sin(rx) + z * math.cos(rx)
+
+            # Rotation autour de l'axe y
+            x = x_new * math.cos(ry) + z_new * math.sin(ry)
+            y = y_new
+            z = -x_new * math.sin(ry) + z_new * math.cos(ry)
+
+            # Rotation autour de l'axe z
+            x_new = x * math.cos(rz) - y * math.sin(rz)
+            y_new = x * math.sin(rz) + y * math.cos(rz)
+            z_new = z
+
+            rotated_vertices.append((x_new, y_new, z_new))
+
+        return rotated_vertices
+
+    def rotate_around_center(self, vertices, rotation):
         rotation = rotation[0]*math.pi/180, rotation[1]*math.pi/180, rotation[2]*math.pi/180
         rotated_vertices = []
         for vertex in vertices:
@@ -102,8 +129,9 @@ class Object:
 
         return rotated_vertices
 
-    def apply_rotation(self):
-        self.rotated_vertices = self.rotate_vertices(self.VERTICES, self.rotation)
+    def apply_rotation(self, camera_rotation):
+        self.rotated_vertices = self.rotate_around_center(self.VERTICES, self.rotation)
+        self.rotated_vertices = self.rotate_vertices(self.rotated_vertices, camera_rotation)
 
 def normalize_vector(vec):
     x, y, z = vec
@@ -122,7 +150,7 @@ focal = 1
 zoom = 1
 lightDir = normalize_vector([2, 0, 3])
 
-cube = Object()
+cube = Object([0, 0, 0])
 
 for vertex_idx in range(len(cube.VERTICES)):
     print(cube.project_point(vertex_idx, Camerapos, focal))
@@ -161,17 +189,17 @@ while running:
                 case pygame.K_p: zoom *= 1.1
                 case pygame.K_m: zoom /= 1.1
 
-                case pygame.K_i: Camerapos[2] += 0.2
-                case pygame.K_k: Camerapos[2] -= 0.2
-                case pygame.K_l: Camerapos[1] += 0.2
-                case pygame.K_j: Camerapos[1] -= 0.2
-                case pygame.K_o: Camerapos[0] += 0.2
-                case pygame.K_u: Camerapos[0] -= 0.2
+                case pygame.K_i: Camerarot[2] += 5
+                case pygame.K_k: Camerarot[2] -= 5
+                case pygame.K_l: Camerarot[1] += 5
+                case pygame.K_j: Camerarot[1] -= 5
+                case pygame.K_o: Camerarot[0] += 5
+                case pygame.K_u: Camerarot[0] -= 5
             
     screen.fill(background_colour)
 
-    cube.rotation = [(cube.rotation[0])%360, (cube.rotation[1]+1)%360, (cube.rotation[2]+2)%360]
-    cube.apply_rotation()
+    cube.rotation = [(cube.rotation[0])%360, (cube.rotation[1])%360, (cube.rotation[2])%360]
+    cube.apply_rotation(Camerarot)
     for face_idx in range(len(cube.FACES)):
         projected = cube.project_face(face_idx, Camerapos, focal)
         if projected != None:
@@ -182,15 +210,20 @@ while running:
             normal = normalize_vector(normal)
             
             color = dot_product(normal, lightDir)
-            print(color)
-            if color<0:color = 0
+            if color<0:color = 0.1
+            if color>1:color = 1
 
             color = [color*255, color*255, color*255]
 
             # Drawing
             pygame.draw.polygon(screen, color, projected, 0)
-            
-            # pygame.draw.polygon(screen, (0, 255, 255), projected, 1)
+            pygame.draw.polygon(screen, (0, 255, 255), projected, 3)
+
+
+    for edge_idx in range(len(cube.EDGES)):
+        proj = cube.project_edge(edge_idx, Camerapos, focal)
+        proj = [[proj[0][0]*100*zoom+halfSize[0], proj[0][1]*100*zoom+halfSize[1]], [proj[1][0]*100*zoom+halfSize[0], proj[1][1]*100*zoom+halfSize[1]]]
+        pygame.draw.line(screen, (0, 150, 100), proj[0], proj[1])
 
     pygame.display.flip()
     clk.tick(60)
