@@ -35,9 +35,10 @@ class Object:
 
         # Camera to view:
         pointx -= camx
-        pointx = -pointx
         pointy -= camy
         pointz -= camz
+        pointx = -pointx
+        pointz = -pointz
 
         if pointx == 0:
             return None
@@ -109,8 +110,17 @@ def normalize_vector(vec):
     dist = (x**2+y**2+z**2)**0.5
     return (x/dist, y/dist, z/dist)
 
+def dot_product(vec_a, vec_b):
+    return vec_a[0]*vec_b[0] + vec_a[1]*vec_b[1] + vec_a[2]*vec_b[2]
+
+def add_vectors(vec_a, vec_b):
+    return vec_a[0]+vec_b[0], vec_a[1]+vec_b[1], vec_a[2]+vec_b[2]
+
 Camerapos = [4, 0, 0]
+Camerarot = [0, 0, 0]
 focal = 1
+zoom = 1
+lightDir = normalize_vector([2, 0, 3])
 
 cube = Object()
 
@@ -145,6 +155,19 @@ while running:
     for event in pygame.event.get():  
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            match event.key:
+
+                case pygame.K_p: zoom *= 1.1
+                case pygame.K_m: zoom /= 1.1
+
+                case pygame.K_i: Camerapos[2] += 0.2
+                case pygame.K_k: Camerapos[2] -= 0.2
+                case pygame.K_l: Camerapos[1] += 0.2
+                case pygame.K_j: Camerapos[1] -= 0.2
+                case pygame.K_o: Camerapos[0] += 0.2
+                case pygame.K_u: Camerapos[0] -= 0.2
+            
     screen.fill(background_colour)
 
     cube.rotation = [(cube.rotation[0])%360, (cube.rotation[1]+1)%360, (cube.rotation[2]+2)%360]
@@ -152,13 +175,22 @@ while running:
     for face_idx in range(len(cube.FACES)):
         projected = cube.project_face(face_idx, Camerapos, focal)
         if projected != None:
-            projected = [[projected[0][0]*100+halfSize[0], projected[0][1]*100+halfSize[1]], [projected[1][0]*100+halfSize[0], projected[1][1]*100+halfSize[1]], [projected[2][0]*100+halfSize[0], projected[2][1]*100+halfSize[1]]]
+            projected = [[projected[0][0]*100*zoom+halfSize[0], projected[0][1]*100*zoom+halfSize[1]], [projected[1][0]*100*zoom+halfSize[0], projected[1][1]*100*zoom+halfSize[1]], [projected[2][0]*100*zoom+halfSize[0], projected[2][1]*100*zoom+halfSize[1]]]
+
+            # Shading
             normal = cube.calculate_normal(face_idx)
             normal = normalize_vector(normal)
-            normal = abs(normal[0]*255), abs(normal[1]*255), abs(normal[2]*255)
-            print(normal)
-            pygame.draw.polygon(screen, normal, projected, 0)
-            pygame.draw.polygon(screen, (0, 255, 255), projected, 1)
+            
+            color = dot_product(normal, lightDir)
+            print(color)
+            if color<0:color = 0
+
+            color = [color*255, color*255, color*255]
+
+            # Drawing
+            pygame.draw.polygon(screen, color, projected, 0)
+            
+            # pygame.draw.polygon(screen, (0, 255, 255), projected, 1)
 
     pygame.display.flip()
     clk.tick(60)
