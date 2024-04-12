@@ -65,10 +65,14 @@ class Object:
         normy = u[2]*v[0] - u[0]*v[2]
         normz = u[0]*v[1] - u[1]*v[0]
 
-        return -normx, -normy, -normz
+        norm = [-normx, -normy, -normz]
+        norm = normalize_vector(norm)
+
+        return norm
     
     def project_face(self, index, camera, focal):
         normal = self.calculate_normal(index)
+
         if normal[0]>0:
             a = self.project_point(self.FACES[index][0], camera, focal)
             b = self.project_point(self.FACES[index][1], camera, focal)
@@ -198,7 +202,7 @@ while running:
             
     screen.fill(background_colour)
 
-    cube.rotation = [(cube.rotation[0])%360, (cube.rotation[1])%360, (cube.rotation[2])%360]
+    cube.rotation = [(cube.rotation[0])%360, (cube.rotation[1])%360, (cube.rotation[2])+1%360]
     cube.apply_rotation(Camerarot)
     for face_idx in range(len(cube.FACES)):
         projected = cube.project_face(face_idx, Camerapos, focal)
