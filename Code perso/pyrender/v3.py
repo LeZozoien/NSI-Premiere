@@ -1,5 +1,5 @@
 # Basic 3d renderer (3rd version)
-from math import tan
+from math import tan, sin, cos
 
 
 # --> Classes
@@ -60,6 +60,8 @@ pygame.display.set_caption('Pyrender')
 pygame.display.flip()
 
 running = True
+clock = pygame.time.Clock
+tick = 0
 
 
 # --> Main code
@@ -144,9 +146,16 @@ def draw_triangles(shape:mesh):
 
 # --> Mainloop
 
-pos = vec3d(0,0,3)
-
 while running:
+    tick += 1
+    tick = tick % 360
+    pos = vec3d(cos(tick/180*3.1415),0,sin(tick/180*3.1415))
+    if 0 <= tick % 360 < 90: pos.y += tick/120
+    elif 90 <= tick % 360 < 180: pos.y += (180-tick)/120
+    elif 180 <= tick % 360 < 270: pos.y -= (180-tick)/120
+    elif 270 <= tick % 360 < 360: pos.y -= (tick-360)/120
+    pos.z += 1.5
+
     for event in pygame.event.get():  
         if event.type == pygame.QUIT:
             running = False
@@ -156,3 +165,5 @@ while running:
     draw_triangles(meshCube)
 
     pygame.display.flip()
+
+    pygame.time.wait(20)
