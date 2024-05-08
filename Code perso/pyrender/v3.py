@@ -1,5 +1,5 @@
 # Basic 3d renderer (3rd version)
-from math import tan, sin, cos
+from math import tan, sin, cos, radians
 
 
 # --> Classes
@@ -108,31 +108,74 @@ fZoom = 100
 
 # --> Fonctions
 
+def rotate_point(point:vec3d, angle_x, angle_y, angle_z):
+    # Convert angles from degrees to radians
+    angle_x = radians(angle_x)
+    angle_y = radians(angle_y)
+    angle_z = radians(angle_z)
+    
+    # Rotation around X-axis
+    x = point.x
+    y = point.y
+    z = point.z
+    cos_x = cos(angle_x)
+    sin_x = sin(angle_x)
+    new_y = y * cos_x - z * sin_x
+    new_z = y * sin_x + z * cos_x
+    
+    # Rotation around Y-axis
+    cos_y = cos(angle_y)
+    sin_y = sin(angle_y)
+    new_z2 = new_z * cos_y - x * sin_y
+    new_x = new_z * sin_y + x * cos_y
+    
+    # Rotation around Z-axis
+    cos_z = cos(angle_z)
+    sin_z = sin(angle_z)
+    new_x2 = new_x * cos_z - new_y * sin_z
+    new_y2 = new_x * sin_z + new_y * cos_z
+    
+    return vec3d(new_x2, new_y2, new_z2)
+
+
+def project_point(point:vec3d):
+    if point.z < 0.1 and point.z > 0:
+        vec2d(0,0)
+    try:
+        return vec2d((ffLen*point.x / (ffLen + point.z)),
+                    (ffLen*point.y / (ffLen + point.z)))
+    except :
+        return vec2d(0,0)
+
+
 def draw_triangles(shape:mesh):
     if not isinstance(shape, mesh):
         raise TypeError
     
     for tri in shape.tris:
 
+        triRotated = triangle(
+            rotate_point(tri.points[0], cam_angle.x, cam_angle.y, cam_angle.z),
+            rotate_point(tri.points[1], cam_angle.x, cam_angle.y, cam_angle.z),
+            rotate_point(tri.points[2], cam_angle.x, cam_angle.y, cam_angle.z)
+        )
+
         triTranslated = triangle(vec3d(0,0,0),vec3d(0,0,0),vec3d(0,0,0))
-        triTranslated.points[0].x = tri.points[0].x + pos.x
-        triTranslated.points[1].x = tri.points[1].x + pos.x
-        triTranslated.points[2].x = tri.points[2].x + pos.x
-        triTranslated.points[0].y = tri.points[0].y + pos.y
-        triTranslated.points[1].y = tri.points[1].y + pos.y
-        triTranslated.points[2].y = tri.points[2].y + pos.y
-        triTranslated.points[0].z = tri.points[0].z + pos.z
-        triTranslated.points[1].z = tri.points[1].z + pos.z
-        triTranslated.points[2].z = tri.points[2].z + pos.z
+        triTranslated.points[0].x = triRotated.points[0].x + pos.x
+        triTranslated.points[1].x = triRotated.points[1].x + pos.x
+        triTranslated.points[2].x = triRotated.points[2].x + pos.x
+        triTranslated.points[0].y = triRotated.points[0].y + pos.y
+        triTranslated.points[1].y = triRotated.points[1].y + pos.y
+        triTranslated.points[2].y = triRotated.points[2].y + pos.y
+        triTranslated.points[0].z = triRotated.points[0].z + pos.z
+        triTranslated.points[1].z = triRotated.points[1].z + pos.z
+        triTranslated.points[2].z = triRotated.points[2].z + pos.z
 
         triProjected = triangle(vec2d(0,0),vec2d(0,0),vec2d(0,0))
 
-        triProjected.points[0] = vec2d((ffLen*triTranslated.points[0].x / (ffLen + triTranslated.points[0].z)),
-                                       (ffLen*triTranslated.points[0].y / (ffLen + triTranslated.points[0].z)))
-        triProjected.points[1] = vec2d((ffLen*triTranslated.points[1].x / (ffLen + triTranslated.points[1].z)),
-                                       (ffLen*triTranslated.points[1].y / (ffLen + triTranslated.points[1].z)))
-        triProjected.points[2] = vec2d((ffLen*triTranslated.points[2].x / (ffLen + triTranslated.points[2].z)),
-                                       (ffLen*triTranslated.points[2].y / (ffLen + triTranslated.points[2].z)))
+        triProjected.points[0] = project_point(triTranslated.points[0])
+        triProjected.points[1] = project_point(triTranslated.points[1])
+        triProjected.points[2] = project_point(triTranslated.points[2])
 
         pygame.draw.polygon(screen,
                             drawColor,
@@ -146,19 +189,34 @@ def draw_triangles(shape:mesh):
 
 # --> Mainloop
 
+pos = vec3d(0,0,0)
+cam_angle = vec3d(0,0,0)
+
+
 while running:
-    tick += 1
-    tick = tick % 360
-    pos = vec3d(cos(tick/180*3.1415),0,sin(tick/180*3.1415))
-    if 0 <= tick % 360 < 90: pos.y += tick/120
-    elif 90 <= tick % 360 < 180: pos.y += (180-tick)/120
-    elif 180 <= tick % 360 < 270: pos.y -= (180-tick)/120
-    elif 270 <= tick % 360 < 360: pos.y -= (tick-360)/120
-    pos.z += 1.5
 
     for event in pygame.event.get():  
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            match event.key:
+
+                case pygame.K_p: fZoom *= 1.1
+                case pygame.K_m: fZoom /= 1.1
+
+                case pygame.K_i: pos.z += 0.2
+                case pygame.K_k: pos.z -= 0.2
+                case pygame.K_l: pos.x += 0.2
+                case pygame.K_j: pos.x -= 0.2
+                case pygame.K_o: pos.y += 0.2
+                case pygame.K_u: pos.y -= 0.2
+
+                case pygame.K_q: cam_angle.y += 5
+                case pygame.K_d: cam_angle.y -= 5
+                case pygame.K_s: cam_angle.x += 5
+                case pygame.K_z: cam_angle.x -= 5
+                case pygame.K_a: cam_angle.z += 5
+                case pygame.K_e: cam_angle.z -= 5
 
     screen.fill(background_colour)
 

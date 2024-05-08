@@ -1,4 +1,4 @@
-def is_last_calc(calculation:tuple):
+def is_last_calc(calculation:tuple|list)->bool:
     terme_1 = calculation[0]
     calcul = calculation[1]
     terme_2 = calculation[2]
