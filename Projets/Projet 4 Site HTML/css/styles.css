@@ -4,28 +4,86 @@
     font-size: 20px;
 }
 
+/* 
+
+colors :
+
+Surface0	#414559
+Base	    #303446
+Mantle	    #292c3c
+Crust	    #232634
+Jaune       
+
+https://github.com/catppuccin/catppuccin
+
+*/
+
+body{
+    margin:0px;
+}
+
 .title{
     font-size: 50px;
     text-align: center;
-    border:1px dotted;
     padding: 10px 0px 20px 0px;
     min-width: 750px;
+    background-image: url("../img/header.jpg");
+    background-size: 100vw;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+    transition: 500ms;
+
+}
+
+.title:hover{
+    background-position-y: 65%;
+    transition: 500ms;
 }
 
 .container{
     display:grid;
     grid-template-columns: minmax(250px,350px) auto;
+    min-height: 1000px;
 }
 
 .menu{
-    border:2px dashed red;
-    text-align: center;
+    background-color: #303446;
+}
+
+ul{
+    list-style-position: inside;
+    padding-left: 20px;
+}
+
+li{
+    width: auto;
+    margin-left: 0px;
+    transition: 250ms;
+    color:#8caaee;
+    transition:100ms;
+}
+
+li:hover{
+    margin-left: 30px;
+    padding-top: 20px; padding-bottom: 20px;
+    transition: 250ms;
+}
+
+a{
+    color:#8caaee;
+    text-decoration:none;
+    transition:100ms;
+}
+a:hover{
+    color:#f5c22a;
+    text-decoration:underline;
+    transition:100ms;
 }
 
 .infos{
-    border:2px dashed green;
     min-width: 500px;
     text-align: center;
+    background-image: linear-gradient(-45deg, #181a23, #414559);
 }
 
 
