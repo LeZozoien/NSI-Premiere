@@ -3,24 +3,24 @@
 
 /* || General  */
 
-*{
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-}
+*{font-family: "Montserrat", sans-serif; font-size: 20px}
 
-body{
-    margin:0px;
-}
+body{margin:0px;}
 
 /* colors :
 
-Surface0	#414559
-Base	    #303446
-Mantle	    #292c3c
-Crust	    #232634
-Jaune       
+Titre-caché     #111111
+Gris-degradé    #181a23
+Surface0	    #414559
+Base	        #303446
+Mantle	        #292c3c
+Crust	        #232634
+Blue 	        #8caaee
+Jaune1          #f5c22a
+Coucher-soleil  #865a7b
+Bleu-footer     #3d72ec
 
-https://github.com/catppuccin/catppuccin
+https://github.com/catppuccin/catppuccin et perso
 
 */
 
@@ -37,39 +37,30 @@ header{
     background-repeat: no-repeat;
     transition: 500ms;
 }
-header:hover{
-    background-position-y: 65%;
-    transition: 500ms;
-}
+header:hover{background-position-y: 65%;}
 
-.title{
+.title, .title-right{
     color:#111111;
     font-size: 50px;
-    text-align: left;
     padding: 30px 0px 40px 20px;
     text-decoration:none;
     transition: 500ms;
 }
-.title:hover{
-    color:white;
-    transition: 500ms;
-}
 
-.title-name{
-    color:#111111;
-    font-size: 50px;
-    text-align: right;
-    padding: 30px 20px 40px 0px;
-    text-decoration:none;
-    transition: 500ms;
-}
-.title-name:hover{
-    color:white;
-    transition: 500ms;
-}
+.title{text-align: left}
+.title-right{text-align: right}
 
-header a {
-    text-decoration:none;
+.title:hover, .title-right:hover{color:white;}
+
+header a {text-decoration:none;}
+
+
+/* || Partie commune */
+
+.sources-contenu, .histoire-contenu, .osu-contenu, .infos{
+    min-width: 500px;
+    text-align: center;
+    background-image: linear-gradient(-45deg, #181a23, #414559);
 }
 
 
@@ -81,9 +72,7 @@ header a {
     min-height: 1000px;
 }
 
-.menu{
-    background-color: #303446;
-}
+.menu{background-color: #303446}
 
 ul{
     list-style-position: inside;
@@ -100,12 +89,11 @@ nav li{
     margin-left: 0px;
     padding-top: 5px; padding-bottom: 5px;
     color:#8caaee;
-    transition:100ms;
+    transition:250ms;
 }
 nav li:hover{
     margin-left: 30px;
     padding-top: 20px; padding-bottom: 20px;
-    transition: 250ms;
 }
 
 nav a{
@@ -116,41 +104,50 @@ nav a{
 nav a:hover{
     color:#f5c22a;
     text-decoration:underline;
-    transition:100ms;
 }
 
-.infos{
-    min-width: 500px;
-    text-align: center;
-    background-image: linear-gradient(-45deg, #181a23, #414559);
+
+h1, h2 {
+    display:table;
+    margin: 35px auto 35px auto;
+    border-radius: 25px;
+    background-color:#865a7b;
 }
 
 h1{
-    display:table;
-    margin: 35px auto 35px auto;
     padding: 30px;
-    border-radius: 25px;
     font-size: 60px;
-    background-color:#865a7b;
 }
 
 h2{
-    display:table;
-    margin: 35px auto 35px auto;
     padding: 15px;
-    border-radius: 25px;
     font-size: 40px;
-    background-color:#865a7b;
 }
 
 .portrait{
     width: 20%;
     border: 20px solid #865a7b;
     border-radius: 50%;
+    transition:500ms
+}
+.portrait:hover{
+    rotate:360deg
 }
 
 
 /* || Page osu  */
+
+/* ... */
+
+
+/* || Page histoire  */
+
+/* ... */
+
+
+/* || Page sources  */
+
+/* ... */
 
 
 /* || Footer  */
@@ -178,15 +175,6 @@ footer.page-principale{
     padding: 10px;
 }
 
-.nav a{
-    color:#3d72ec;
-}
+.nav a{color:#3d72ec}
 
-footer .lien-image {
-    rotate: 0deg;
-    transition: 250ms;
-}
-footer .lien-image:hover {
-    rotate: 360deg;
-    transition: 250ms;
-}
+footer .lien-image:hover {rotate: 360deg;transition: 250ms}
