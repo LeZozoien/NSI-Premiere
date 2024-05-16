@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
 *{
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
 }
 
-/* 
-
-colors :
+/* colors :
 
 Surface0	#414559
 Base	    #303446
@@ -23,9 +22,10 @@ body{
 }
 
 .title{
+    color:#111111;
     font-size: 50px;
-    text-align: center;
-    padding: 10px 0px 20px 0px;
+    text-align: left;
+    padding: 30px 0px 40px 20px;
     min-width: 750px;
     background-image: url("../img/header.jpg");
     background-size: 100vw;
@@ -36,6 +36,7 @@ body{
 }
 
 .title:hover{
+    color:white;
     background-position-y: 65%;
     transition: 500ms;
 }
@@ -58,7 +59,7 @@ ul{
 li{
     width: auto;
     margin-left: 0px;
-    transition: 250ms;
+    padding-top: 5px; padding-bottom: 5px;
     color:#8caaee;
     transition:100ms;
 }
@@ -74,6 +75,7 @@ a{
     text-decoration:none;
     transition:100ms;
 }
+
 a:hover{
     color:#f5c22a;
     text-decoration:underline;
@@ -86,7 +88,6 @@ a:hover{
     background-image: linear-gradient(-45deg, #181a23, #414559);
 }
 
-
 footer.page-principale{
     display: grid;
     grid-template-columns: minmax(250px,350px) auto;
@@ -94,15 +95,18 @@ footer.page-principale{
     text-align: center;
     min-width: 750px;
 }
+
 .logo-cse{
     width: 330px;
     height: 125px;
     vertical-align: center;
 }
+
 .nav{
     align-self: center;
     text-align: center;
 }
+
 .nav li{
     display: inline-block;
     padding: 10px;
