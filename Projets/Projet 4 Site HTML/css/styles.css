@@ -5,7 +5,7 @@
 
 *{font-family: "Montserrat", sans-serif; font-size: 20px}
 
-body{margin:0px;}
+body{margin:0px}
 
 /* colors :
 
@@ -61,6 +61,11 @@ header a {text-decoration:none;}
     min-width: 500px;
     text-align: center;
     background-image: linear-gradient(-45deg, #181a23, #414559);
+    padding: 10px;
+}
+
+p, h1, h2 {
+    color:white;
 }
 
 
@@ -109,7 +114,7 @@ nav a:hover{
 
 h1, h2 {
     display:table;
-    margin: 35px auto 35px auto;
+    margin: 25px auto 25px auto;
     border-radius: 25px;
     background-color:#865a7b;
 }
@@ -147,7 +152,74 @@ h2{
 
 /* || Page sources  */
 
-/* ... */
+.liste-sources{
+    color:white;
+    text-align: left;
+}
+
+.liste-sources {
+    list-style: none;
+    padding: 0;
+}
+
+.liste-sources li {
+    background-image: linear-gradient(40deg, #373a4b, #21222e);
+    margin: 10px 20px 0 25px;
+    padding: 15px;
+    border-radius: 5px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.liste-sources li::before {
+    content: '-';
+    color: #ff6347;
+    font-size: 2em;
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.liste-sources li:hover {
+    background: #ff6347;
+    color: #fff;
+    transform: translateX(10px);
+}
+
+.liste-sources li:hover::before {
+    color: #fff;
+}
+
+.liste-sources a{
+    color: #8caaee;
+    text-decoration: none;
+}
+.liste-sources a:hover{
+    color: #f5c22a;
+}
+
+#anim-underline {
+    display: inline-block;
+    position: relative;
+  }
+
+#anim-underline::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #f5c22a;
+    transform-origin: bottom right;
+    transition: transform 0.45s ease;
+}
+#anim-underline:hover::after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
 
 
 /* || Footer  */
@@ -175,6 +247,12 @@ footer.page-principale{
     padding: 10px;
 }
 
+.nav p {color:black}
+
 .nav a{color:#3d72ec}
 
-footer .lien-image:hover {rotate: 360deg;transition: 250ms}
+footer .lien-image {
+    width: min-content;
+    transition: 250ms
+}
+footer .lien-image:hover {rotate: 360deg}

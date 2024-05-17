@@ -9,7 +9,6 @@
 # Ignorer le .vscode
 .vscode/
 
-# Ignorer les fichier obsidian
+# Ignorer les fichiers obsidian
 Exos projet euler.md
 NSI.md
-
