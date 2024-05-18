@@ -31,7 +31,7 @@ header{
     display: grid;
     grid-template-columns: auto auto;
     min-width: 1160px;
-    background-image: url("../img/header.jpg");
+    background-image: url("../images/header.jpg");
     background-size: 100%;
     background-position-y: 50%;
     background-repeat: no-repeat;
@@ -64,9 +64,12 @@ header a {text-decoration:none;}
     padding: 10px;
 }
 
-p, h1, h2 {
+p, h1, h2, h3{
     color:white;
 }
+
+.yellow{color:#f5c22a} .light-blue{color:#8caaee} .dark-blue{color:#3d72ec}
+.black{color:#000} .white{color:#fff}
 
 
 /* || Page principale */
@@ -76,25 +79,24 @@ p, h1, h2 {
     grid-template-columns: minmax(250px,350px) auto;
     min-height: 1000px;
     min-width: 1160px;
+    background-color: #303446;
 }
 
 .menu{background-color: #303446}
 
-ul{
+.menu ul{
     list-style-position: inside;
     padding-left: 20px;
 }
 
-nav {
+nav.menu {
     position: sticky;
     top: 20px;
 }
 
 nav li{
-    width: auto;
     margin-left: 0px;
     padding-top: 5px; padding-bottom: 5px;
-    color:#8caaee;
     transition:250ms;
 }
 nav li:hover{
@@ -105,7 +107,7 @@ nav li:hover{
 nav a{
     color:#8caaee;
     text-decoration:none;
-    transition:100ms;
+    transition:250ms;
 }
 nav a:hover{
     color:#f5c22a;
@@ -113,7 +115,7 @@ nav a:hover{
 }
 
 
-h1, h2 {
+h1, h2, h3{
     display:table;
     margin: 25px auto 25px auto;
     border-radius: 25px;
@@ -130,14 +132,67 @@ h2{
     font-size: 40px;
 }
 
+h3{
+    padding: 15px;
+    font-size: 25px; 
+}
+
 .portrait{
     width: 20%;
     border: 20px solid #865a7b;
     border-radius: 50%;
     transition:500ms
 }
-.portrait:hover{
-    transform: rotate(360deg);
+.portrait:hover{transform: rotate(360deg)}
+
+#specialites, #hobbys{
+    color:#fff;
+    list-style-position: inside;
+    padding-left: 20px
+}
+#specialites li::marker, #hobbys li::marker{color:#f5c22a}
+
+#hobbys a{text-decoration: none}
+#osu{color:#111}
+#osu:hover{animation: rainbow 1s linear; animation-iteration-count: infinite}
+
+@keyframes rainbow{
+    100%,0%{
+        color: rgb(255,0,0);
+    }
+    8%{
+        color: rgb(255,127,0);
+    }
+    16%{
+        color: rgb(255,255,0);
+    }
+    25%{
+        color: rgb(127,255,0);
+    }
+    33%{
+        color: rgb(0,255,0);
+    }
+    41%{
+        color: rgb(0,255,127);
+    }
+    50%{
+        color: rgb(0,255,255);
+    }
+    58%{
+        color: rgb(0,127,255);
+    }
+    66%{
+        color: rgb(0,0,255);
+    }
+    75%{
+        color: rgb(127,0,255);
+    }
+    83%{
+        color: rgb(255,0,255);
+    }
+    91%{
+        color: rgb(255,0,127);
+    }
 }
 
 
@@ -148,17 +203,50 @@ h2{
 
 /* || Page histoire  */
 
-/* ... */
+.container-timeline{
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+
+.events-container{
+    border-left: solid white;
+    text-align: left;
+    padding-left: 20px;
+    list-style: none;
+}
+
+
+.timeline-item{
+    position:relative;
+    padding: 20px
+}
+
+.timeline-item::before{
+    position:absolute;
+    width: 30px; height: 30px;
+    content:"";
+    top: 50%;
+    left: -40px;
+    border-radius: 50%;
+    background-color: #3d72ec;
+    border: solid #8caaee;
+    transition:250ms
+}
+
+.timeline-item:hover::before{
+    background-color: #ff6347;
+    border: solid #f5c22a;
+}
+
+.item-date{
+    padding-bottom: 10px;
+}
 
 
 /* || Page sources  */
 
 .liste-sources{
-    color:white;
     text-align: left;
-}
-
-.liste-sources {
     list-style: none;
     padding: 0;
 }
@@ -173,7 +261,7 @@ h2{
 }
 
 .liste-sources li::before {
-    content: '-';
+    content: "•";
     color: #ff6347;
     font-size: 2em;
     position: absolute;
