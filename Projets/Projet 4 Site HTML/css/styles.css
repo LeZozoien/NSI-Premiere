@@ -61,7 +61,7 @@ header a {text-decoration:none;}
     min-width: 500px;
     text-align: center;
     background-image: linear-gradient(-45deg, #181a23, #414559);
-    padding: 10px;
+    padding:10px 10% 10px 10%
 }
 
 p, h1, h2, h3{
@@ -70,9 +70,6 @@ p, h1, h2, h3{
 
 .yellow{color:#f5c22a} .light-blue{color:#8caaee} .dark-blue{color:#3d72ec}
 .black{color:#000} .white{color:#fff}
-
-
-/* || Page principale */
 
 .container{
     display:grid;
@@ -103,15 +100,33 @@ nav li:hover{
     padding-top: 20px; padding-bottom: 20px;
 }
 
-nav a{
-    color:#8caaee;
-    text-decoration:none;
-    transition:250ms;
+a{text-decoration: none}
+a:hover{color:#f5c22a}
+
+.anim-underline {
+    display: inline-block;
+    position: relative;
+  }
+
+.anim-underline::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #f5c22a;
+    transform-origin: bottom right;
+    transition: transform 0.45s ease;
 }
-nav a:hover{
-    color:#f5c22a;
-    text-decoration:underline;
+.anim-underline:hover::after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
+
+
+/* || Page principale */
 
 
 h1, h2, h3{
@@ -119,8 +134,9 @@ h1, h2, h3{
     margin: 25px auto 25px auto;
     border-radius: 25px;
     background-color:#865a7b;
+    transition: 250ms;
 }
-
+h1:hover, h2:hover, h3:hover{margin: 35px auto 35px auto;}
 h1{
     padding: 30px;
     font-size: 60px;
@@ -197,14 +213,16 @@ h3{
 
 /* || Page osu  */
 
-/* ... */
+.gameplay img{
+    width: 50%;
+}
+.video iframe{
+    width: 80%;
+    aspect-ratio: 16/9;
+}
 
 
 /* || Page histoire  */
-
-.histoire-contenu{
-    padding:0% 10% 0% 10%
-}
 
 .histoire-contenu-paragraphe{
     line-height: 150%;
@@ -301,28 +319,6 @@ h3{
     color: #f5c22a;
 }
 
-#anim-underline {
-    display: inline-block;
-    position: relative;
-  }
-
-#anim-underline::after{
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #f5c22a;
-    transform-origin: bottom right;
-    transition: transform 0.45s ease;
-}
-#anim-underline:hover::after{
-    transform: scaleX(1);
-    transform-origin: bottom left;
-}
-
 
 /* || Footer  */
 
@@ -351,7 +347,8 @@ footer.page-principale{
 
 .nav p {color:black}
 
-.nav a{color:#3d72ec}
+.nav a{color:#3d72ec; transition: 250ms;}
+.nav a:hover{color:#f5c22a}
 
 footer .lien-image {
     width: min-content;
