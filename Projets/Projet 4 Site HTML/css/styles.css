@@ -82,14 +82,13 @@ p, h1, h2, h3{
     background-color: #303446;
 }
 
-.menu{background-color: #303446}
+.menu{
+    background-color: #303446;
+}
 
 .menu ul{
     list-style-position: inside;
     padding-left: 20px;
-}
-
-nav.menu {
     position: sticky;
     top: 20px;
 }
