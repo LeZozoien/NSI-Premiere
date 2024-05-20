@@ -202,12 +202,21 @@ h3{
 
 /* || Page histoire  */
 
+.histoire-contenu{
+    padding:0% 10% 0% 10%
+}
+
+.histoire-contenu-paragraphe{
+    line-height: 150%;
+}
+
 .container-timeline{
     display: grid;
     grid-template-columns: 10% 90%;
 }
 
 .events-container{
+    color:white;
     border-left: solid white;
     text-align: left;
     padding-left: 20px;
@@ -224,7 +233,7 @@ h3{
     position:absolute;
     width: 30px; height: 30px;
     content:"";
-    top: 50%;
+    top: 40%;
     left: -40px;
     border-radius: 50%;
     background-color: #3d72ec;
@@ -235,6 +244,11 @@ h3{
 .timeline-item:hover::before{
     background-color: #ff6347;
     border: solid #f5c22a;
+}
+
+.item-titre{
+    font-size: 30px;
+    padding-bottom: 10px;
 }
 
 .item-date{
