@@ -28,7 +28,9 @@ if __name__ == "__main__":
     selection = []
 
     for livre in livres:
-        if (livre["Auteur"] == "Kawabata" and livre["Titre"] != "Nuée d'oiseaux blancs") or (livre["Titre"] == "Fondation" and livre["Auteur"] == "Asimov"):
+        if (livre["Auteur"] == "Kawabata" and livre["Titre"] != "Nuée d'oiseaux blancs")\
+            or (livre["Titre"] == "Fondation" and livre["Auteur"] == "Asimov"):
+            
             selection.append(livre)
 
     print(selection)
