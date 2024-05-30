@@ -1,0 +1,32 @@
+PWD c:\Users\Tabernak69\OneDrive - College Episcopal Saint-Etienne de Strasbourg\Documents\École\Première\NSI\Code perso\Tex_tests
+INPUT C:\Users\Tabernak69\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
+INPUT c:\Users\Tabernak69\OneDrive - College Episcopal Saint-Etienne de Strasbourg\Documents\École\Première\NSI\Code perso\Tex_tests\main.tex
+OUTPUT main.log
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\base\report.cls
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\base\size10.clo
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
+INPUT .\main.aux
+INPUT .\main.aux
+INPUT main.aux
+OUTPUT main.aux
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
+OUTPUT main.pdf
+INPUT C:\Users\Tabernak69\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
+INPUT main.aux
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
+INPUT C:\Users\Tabernak69\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr17.pfb
