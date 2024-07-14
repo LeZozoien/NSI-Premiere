@@ -32,7 +32,7 @@ class Object:
 
         # Variables : 
         camx, camy, camz = camera
-        pointx, pointy, pointz = self.rotated_vertices[index]
+        pointx, pointy, pointz = self.VERTICES[index]
 
         # Camera to view:
         pointx -= camx
@@ -56,7 +56,7 @@ class Object:
         else: return a, b
 
     def calculate_normal(self, index):
-        a, b, c = self.rotated_vertices[self.FACES[index][0]],self.rotated_vertices[self.FACES[index][1]],self.rotated_vertices[self.FACES[index][2]]
+        a, b, c = self.VERTICES[self.FACES[index][0]],self.VERTICES[self.FACES[index][1]],self.VERTICES[self.FACES[index][2]]
 
         u = (b[0]-a[0], b[1]-a[1], b[2]-a[2])
         v = (c[0]-a[0], c[1]-a[1], c[2]-a[2])
