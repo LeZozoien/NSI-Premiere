@@ -1,7 +1,5 @@
 #include <iostream>
-#include <vector>
 #include <cmath>
-#include <fstream>
 
 double heron(double n, double p){
     double u = n;
