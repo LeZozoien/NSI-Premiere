@@ -12,3 +12,6 @@
 # Ignorer les fichiers obsidian
 Exos projet euler.md
 NSI.md
+
+# Ignorer le pycache
+Projets/Projet 2 Nombres premiers et conversions/end_folder/__pycache__/PrimLib.cpython-310.pyc
